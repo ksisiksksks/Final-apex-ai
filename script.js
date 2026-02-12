@@ -10,9 +10,9 @@
 // Setelah setup, GANTI 3 nilai di bawah ini:
 
 const EMAILJS_CONFIG = {
-    PUBLIC_KEY: 'YOUR_PUBLIC_KEY',        // Ganti dengan Public Key dari EmailJS
-    SERVICE_ID: 'YOUR_SERVICE_ID',        // Ganti dengan Service ID dari EmailJS
-    TEMPLATE_ID: 'YOUR_TEMPLATE_ID'       // Ganti dengan Template ID dari EmailJS
+    PUBLIC_KEY: 'xmIUEYxC0VWc-r6aI',        // Ganti dengan Public Key dari EmailJS
+    SERVICE_ID: 'xmIUEYxC0VWc-r6aI',        // Ganti dengan Service ID dari EmailJS
+    TEMPLATE_ID: 'template_xdygtqx'       // Ganti dengan Template ID dari EmailJS
 };
 
 // Contoh setelah diganti:
