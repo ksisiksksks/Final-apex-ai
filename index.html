@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>APEX GPT - AI by Rafi</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Puter.js AI -->
+    <script src="https://js.puter.com/v2/"></script>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Login/Signup Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+            <!-- Logo -->
+            <div class="logo-wrap">
+                <svg viewBox="0 0 100 100" class="logo">
+                    <defs>
+                        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00d4ff"/>
+                            <stop offset="100%" style="stop-color:#a855f7"/>
+                        </linearGradient>
+                    </defs>
+                    <polygon points="50,25 75,65 25,65" fill="url(#g1)"/>
+                </svg>
+            </div>
+            <h1 class="title">APEX GPT</h1>
+            <p class="tagline">AI Blak-blakan by Rafi 🎬</p>
+            
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="input-group">
+                    <input type="text" id="loginUsername" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="btn-submit">LOGIN</button>
+                <p class="form-error" id="loginError"></p>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form">
+                <div class="input-group">
+                    <input type="text" id="signupUsername" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="signupEmail" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signupPassword" required>
+                    <label>Password</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signupConfirm" required>
+                    <label>Confirm Password</label>
+                </div>
+                <button type="submit" class="btn-submit">SIGN UP</button>
+                <p class="form-error" id="signupError"></p>
+            </form>
+            
+            <!-- Info -->
+            <div class="auth-info">
+                <p>🆓 Free: 50 pesan / 5 jam</p>
+                <p>⭐ <a href="#" onclick="openUpgrade(); return false;">Upgrade Pro</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app hide" id="app">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <button class="icon-btn" onclick="toggleMenu()">
+                <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="topbar-title">
+                <svg viewBox="0 0 100 100" class="logo-mini">
+                    <polygon points="50,25 75,65 25,65" fill="url(#g1)"/>
+                </svg>
+                <span>APEX GPT</span>
+            </div>
+            <button class="icon-btn" onclick="toggleMenu()">
+                <div class="avatar" id="topAvatar">A</div>
+            </button>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar" onclick="event.stopPropagation()">
+            <div class="sidebar-top">
+                <div class="user-info">
+                    <div class="avatar-big" id="sideAvatar">A</div>
+                    <div>
+                        <p class="username" id="username">User</p>
+                        <p class="plan" id="plan">Free Plan</p>
+                    </div>
+                </div>
+                <button class="icon-btn" onclick="toggleMenu()">✕</button>
+            </div>
+            
+            <div class="usage-card" id="usageCard">
+                <div class="usage-row">
+                    <span>Pemakaian</span>
+                    <span id="usageText">0/50</span>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <p class="timer-text" id="timerText">Reset: 5h 0m</p>
+            </div>
+            
+            <div class="menu-list">
+                <button class="menu-btn" onclick="newChat()">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Chat Baru
+                </button>
+                
+                <button class="menu-btn" onclick="exportChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Export Chat
+                </button>
+                
+                <button class="menu-btn pro-btn" id="upgradeBtn" onclick="openUpgrade()">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    Upgrade Pro
+                </button>
+                
+                <button class="menu-btn danger-btn" onclick="clearChat()">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                    Hapus Chat
+                </button>
+                
+                <button class="menu-btn report-btn" onclick="showReport()">
+                    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                    Lapor Bug
+                </button>
+            </div>
+            
+            <button class="menu-btn logout-btn" onclick="logout()">
+                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                Logout
+            </button>
+        </div>
+        
+        <!-- Chat -->
+        <div class="chat">
+            <div class="messages" id="messages">
+                <div class="welcome">
+                    <svg viewBox="0 0 100 100" class="welcome-logo">
+                        <polygon points="50,25 75,65 25,65" fill="url(#g1)"/>
+                    </svg>
+                    <h2>Yo! Gue Apex GPT</h2>
+                    <p>AI buatan Rafi. Mau nanya apa? 🎬</p>
+                </div>
+            </div>
+            
+            <div class="input-wrap">
+                <div class="input-container">
+                    <textarea id="chatInput" placeholder="Ketik pesan..." rows="1"></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
